@@ -1,0 +1,3 @@
+rootProject.name = 'woodo-homework'
+include('woodo-homework-api')
+include('woodo-homework-core')

@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(":woodo-homework-core")
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
