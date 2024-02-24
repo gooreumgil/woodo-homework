@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories
 @EnableJpaAuditing
-@EntityScan
+@EntityScan(basePackages = "com.woodo.homework.core.domain")
 public class CoreJpaConfig {
 }

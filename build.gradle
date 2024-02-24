@@ -32,6 +32,7 @@ def apiProject = project(":woodo-homework-api")
 def coreProject = project(":woodo-homework-core")
 
 def springProjects = [apiProject, coreProject]
+def jpaProjects = [apiProject, coreProject]
 
 configure(springProjects) {
     apply {
@@ -55,6 +56,15 @@ configure(springProjects) {
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+    }
+
+}
+
+configure(jpaProjects) {
+
+    dependencies {
+
+
     }
 
 }
