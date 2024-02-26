@@ -1,8 +1,8 @@
 package com.woodo.homework.core.domain.member;
 
 import com.woodo.homework.core.audit.AuditingDomain;
-import com.woodo.homework.core.domain.book.Book;
-import com.woodo.homework.core.domain.book.BookRental;
+import com.woodo.homework.core.domain.consignedbook.ConsignedBook;
+import com.woodo.homework.core.domain.bookrental.BookRental;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,10 +26,23 @@ public class Member extends AuditingDomain {
     private String phoneNumber;
     private String password;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Book> bookList = new ArrayList<>();
+    @OneToMany(mappedBy = "consignor", cascade = CascadeType.ALL)
+    private List<ConsignedBook> consignedBookList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BookRental> memberBookRentalList = new ArrayList<>();
 
+    public static Member create(String name, String email, String phoneNumber, String encodedPassword) {
+        Member member = new Member();
+        member.name = name;
+        member.email = email;
+        member.phoneNumber = phoneNumber;
+        member.password = encodedPassword;
+        return member;
+    }
+
+    public void addConsignedBook(ConsignedBook consignedBook) {
+        this.consignedBookList.add(consignedBook);
+        consignedBook.setConsignor(this);
+    }
 }
