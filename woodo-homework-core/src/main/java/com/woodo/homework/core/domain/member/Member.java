@@ -26,10 +26,13 @@ public class Member extends AuditingDomain {
     private String phoneNumber;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
     @OneToMany(mappedBy = "consignor", cascade = CascadeType.ALL)
     private List<ConsignedBook> consignedBookList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "borrower", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BookRental> memberBookRentalList = new ArrayList<>();
 
     public static Member create(String name, String email, String phoneNumber, String encodedPassword) {
@@ -38,11 +41,16 @@ public class Member extends AuditingDomain {
         member.email = email;
         member.phoneNumber = phoneNumber;
         member.password = encodedPassword;
+        member.role = MemberRole.MEMBER;
         return member;
     }
 
     public void addConsignedBook(ConsignedBook consignedBook) {
         this.consignedBookList.add(consignedBook);
         consignedBook.setConsignor(this);
+    }
+
+    public void addBookRental(BookRental bookRental) {
+        this.memberBookRentalList.add(bookRental);
     }
 }

@@ -1,4 +1,4 @@
-package com.woodo.homework.api.domain.member.dto;
+package com.woodo.homework.api.domain.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,11 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberSaveRequest {
+public class LoginRequest {
 
     private String name;
-    private String email;
-    private String phoneNumber;
     private String password;
 
 }
