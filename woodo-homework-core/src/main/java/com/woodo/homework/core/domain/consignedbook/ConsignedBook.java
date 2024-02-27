@@ -25,7 +25,7 @@ public class ConsignedBook extends AuditingDomain {
     private String name;
     private String isbn;
     private BigDecimal rentalPrice;
-    private Integer rentalCount;
+    private int rentalCount;
     private boolean isRented;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,4 +46,21 @@ public class ConsignedBook extends AuditingDomain {
     public void setConsignor(Member consignor) {
         this.consignor = consignor;
     }
+
+    public void addBookRental(BookRental bookRental) {
+        this.bookRentalList.add(bookRental);
+    }
+
+    public void plusRentalCount() {
+        this.rentalCount++;
+    }
+
+    public void rentBook() {
+        this.isRented = true;
+    }
+
+    public void returnBook() {
+        this.isRented = false;
+    }
+
 }

@@ -29,7 +29,7 @@ public class Member extends AuditingDomain {
     @OneToMany(mappedBy = "consignor", cascade = CascadeType.ALL)
     private List<ConsignedBook> consignedBookList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "borrower", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BookRental> memberBookRentalList = new ArrayList<>();
 
     public static Member create(String name, String email, String phoneNumber, String encodedPassword) {
@@ -44,5 +44,9 @@ public class Member extends AuditingDomain {
     public void addConsignedBook(ConsignedBook consignedBook) {
         this.consignedBookList.add(consignedBook);
         consignedBook.setConsignor(this);
+    }
+
+    public void addBookRental(BookRental bookRental) {
+        this.memberBookRentalList.add(bookRental);
     }
 }

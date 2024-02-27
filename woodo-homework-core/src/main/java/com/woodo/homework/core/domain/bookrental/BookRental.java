@@ -25,10 +25,20 @@ public class BookRental extends AuditingDomain {
     private ConsignedBook consignedBook;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "borrower_id")
+    private Member borrower;
 
     private LocalDateTime rentalStartDate;
     private LocalDateTime rentalEndDate;
+
+    public void setBorrower(Member borrower) {
+        this.borrower = borrower;
+        borrower.addBookRental(this);
+    }
+
+    public void setConsignedBook(ConsignedBook consignedBook) {
+        this.consignedBook = consignedBook;
+        consignedBook.addBookRental(this);
+    }
 
 }

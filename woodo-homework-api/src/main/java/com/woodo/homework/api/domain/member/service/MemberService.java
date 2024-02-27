@@ -34,6 +34,7 @@ public class MemberService {
         return memberRepository.findById(id);
     }
 
+    @Transactional
     public void addConsignedBook(Long id, ConsignedBookSaveRequest consignedBookSaveRequest) {
         Member member = findById(id).orElseThrow(() -> new RuntimeException(""));
         ConsignedBook consignedBook = ConsignedBook.create(consignedBookSaveRequest.getName(), consignedBookSaveRequest.getIsbn(), consignedBookSaveRequest.getRentalPrice());
