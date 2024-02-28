@@ -45,7 +45,7 @@ public class ApiSecurityConfig {
                 .authenticationManager(authenticationManager(authenticationConfiguration))
                 .addFilter(corsFilter())
                 .addFilterAfter(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), jwtProvider), CorsFilter.class)
-                .addFilterBefore(new JwtAuthenticationExceptionFilter(), JwtAuthenticationExceptionFilter.class)
+                .addFilterBefore(new JwtAuthenticationExceptionFilter(), JwtAuthenticationFilter.class)
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http
