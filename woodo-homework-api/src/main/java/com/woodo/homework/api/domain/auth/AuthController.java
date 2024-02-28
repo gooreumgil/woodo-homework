@@ -10,6 +10,7 @@ import com.woodo.homework.api.exception.HttpException;
 import com.woodo.homework.api.exception.HttpExceptionCode;
 import com.woodo.homework.core.domain.member.Member;
 import com.woodo.homework.core.utils.AES256Util;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class AuthController {
     private final JwtProvider jwtProvider;
     private final AuthService authService;
 
+    @Operation(description = "회원가입", summary = "회원가입")
     @PostMapping("/sign-up")
     public ResponseEntity<SignUpResponse> signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
 
@@ -32,6 +34,7 @@ public class AuthController {
 
     }
 
+    @Operation(description = "로그인", summary = "로그인")
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
 

@@ -33,10 +33,18 @@ public class ApiSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration) throws Exception {
 
+        String[] permitAllRequests = new String[]{
+                "/api/v1/auth/**",
+                "/api/v1/consigned-books",
+                "/swagger-ui/**",
+                "/v3/api-docs/**",
+        };
+
         http
                 .authorizeHttpRequests(registry -> {
                     registry
-                            .requestMatchers("/api/v1/auth/**", "/api/v1/consigned-books").permitAll();
+                            .requestMatchers(permitAllRequests).permitAll()
+                            .anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);

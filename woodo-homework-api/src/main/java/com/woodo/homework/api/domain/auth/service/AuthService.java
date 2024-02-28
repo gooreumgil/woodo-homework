@@ -1,6 +1,5 @@
 package com.woodo.homework.api.domain.auth.service;
 
-import com.woodo.homework.api.constants.ExceptionConstants;
 import com.woodo.homework.api.domain.auth.dto.LoginRequest;
 import com.woodo.homework.api.domain.auth.dto.SignUpRequest;
 import com.woodo.homework.api.exception.AuthorizationFailureException;
@@ -51,10 +50,16 @@ public class AuthService {
 
     public Member login(LoginRequest loginRequest) {
 
-        String name = loginRequest.getName();
         String password = loginRequest.getPassword();
+        String encryptedEmail;
 
-        Optional<Member> optionalMember = memberRepository.findByName(name);
+        try {
+            encryptedEmail = AES256Util.encrypt(loginRequest.getEmail());
+        } catch (Exception e) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, HttpExceptionCode.EMAIL_ENCRYPT_FAIL, "정상적인 이메일이 아닙니다.");
+        }
+
+        Optional<Member> optionalMember = memberRepository.findByEmail(encryptedEmail);
         if (optionalMember.isEmpty()) {
             throw new AuthorizationFailureException(LOGIN_FAILED);
         }

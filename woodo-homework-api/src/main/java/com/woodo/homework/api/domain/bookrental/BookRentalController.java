@@ -18,6 +18,11 @@ public class BookRentalController {
 
     private final BookRentalService bookRentalService;
 
+    @GetMapping
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal MemberContext memberContext) {
+        return null;
+    }
+
     @PostMapping
     public ResponseEntity<BookRentalSaveResponse> save(@RequestParam List<Long> consignedBookIds, @AuthenticationPrincipal MemberContext memberContext) {
 
