@@ -1,4 +1,4 @@
-package com.woodo.homework.api.config.jwt;
+package com.woodo.homework.api.security.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

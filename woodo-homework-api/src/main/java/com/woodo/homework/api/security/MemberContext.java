@@ -1,4 +1,4 @@
-package com.woodo.homework.api.config.jwt;
+package com.woodo.homework.api.security;
 
 import com.woodo.homework.core.domain.member.Member;
 import io.jsonwebtoken.Claims;

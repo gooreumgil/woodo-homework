@@ -4,3 +4,4 @@ spring:
 
 jwt:
   secret-key: x8dQjGRKwBU0wDVLXMwuBgx9xWjdw8wG3JWqbGvQRg2X6YtYdqSRcT0YtB9b4wYr
+

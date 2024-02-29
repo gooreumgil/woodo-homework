@@ -29,19 +29,22 @@ public class AuthService {
     @Transactional
     public Member signUp(SignUpRequest signUpRequest) {
 
-        Optional<Member> optionalMember = memberRepository.findByName(signUpRequest.getName());
+        String encryptedEmail;
+
+        try {
+            encryptedEmail = AES256Util.encrypt(signUpRequest.getEmail());
+        } catch (Exception e) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, HttpExceptionCode.EMAIL_ENCRYPT_FAIL, "정상적인 이메일이 아닙니다.");
+        }
+
+        Optional<Member> optionalMember = memberRepository.findByEmail(encryptedEmail);
 
         if (optionalMember.isPresent()) {
             throw new HttpException(HttpStatus.BAD_REQUEST, HttpExceptionCode.ALREADY_EXISTS_EMAIL, "이미 가입된 이메일입니다.");
         }
 
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
-        String encryptedEmail;
-        try {
-            encryptedEmail = AES256Util.encrypt(signUpRequest.getEmail());
-        } catch (Exception e) {
-            throw new HttpException(HttpStatus.BAD_REQUEST, HttpExceptionCode.EMAIL_ENCRYPT_FAIL, "정상적인 이메일이 아닙니다.");
-        }
+
         Member member = Member.create(signUpRequest.getName(), encryptedEmail, signUpRequest.getPhoneNumber(), encodedPassword);
 
         return memberRepository.save(member);

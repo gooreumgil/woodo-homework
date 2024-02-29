@@ -17,5 +17,12 @@ public class ConsignedBookSearchCondition {
     private String consignorName;
     private BigDecimal minRentalPrice;
     private BigDecimal maxRentalPrice;
+    private Long consignorId;
 
+    public ConsignedBookSearchCondition(String bookName, String consignorName, BigDecimal minRentalPrice, BigDecimal maxRentalPrice) {
+        this.bookName = bookName;
+        this.consignorName = consignorName;
+        this.minRentalPrice = minRentalPrice;
+        this.maxRentalPrice = maxRentalPrice;
+    }
 }

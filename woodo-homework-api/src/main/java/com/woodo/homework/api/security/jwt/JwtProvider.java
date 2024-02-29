@@ -1,7 +1,7 @@
-package com.woodo.homework.api.config.jwt;
+package com.woodo.homework.api.security.jwt;
 
+import com.woodo.homework.api.security.MemberContext;
 import com.woodo.homework.core.domain.member.Member;
-import com.woodo.homework.core.utils.AES256Util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

@@ -2,6 +2,7 @@ package com.woodo.homework.api.domain.member.service;
 
 import com.woodo.homework.api.domain.consignedbook.dto.ConsignedBookSaveRequest;
 import com.woodo.homework.core.domain.consignedbook.ConsignedBook;
+import com.woodo.homework.core.domain.consignedbook.repository.ConsignedBookRepository;
 import com.woodo.homework.core.domain.member.Member;
 import com.woodo.homework.core.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final ConsignedBookRepository consignedBookRepository;
 
     public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
@@ -26,7 +28,6 @@ public class MemberService {
         Member member = findById(id).orElseThrow(() -> new RuntimeException(""));
         ConsignedBook consignedBook = ConsignedBook.create(consignedBookSaveRequest.getName(), consignedBookSaveRequest.getIsbn(), consignedBookSaveRequest.getRentalPrice());
         member.addConsignedBook(consignedBook);
-        memberRepository.save(member);
-        return consignedBook;
+        return consignedBookRepository.save(consignedBook);
     }
 }

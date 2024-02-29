@@ -8,8 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/woodo-homework?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/woodo-homework
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: woodo-app
-    password: rkskek13@
-
+    username: root
+    password: root

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,13 +35,17 @@ public class BookRentalService {
                         HttpExceptionCode.NOT_EXISTS,
                         "존재하지 않는 member 입니다."));
 
-        List<ConsignedBook> consignedBookList = consignedBookRepository.findAllByIdIn(consignedBookIds);
+        List<ConsignedBook> consignedBookList = consignedBookRepository.findAllByIdInJoinedConsignor(consignedBookIds);
 
         if (consignedBookList.isEmpty()) {
             throw new HttpException(
                     HttpStatus.BAD_REQUEST, HttpExceptionCode.NOT_EXISTS, "도서가 존재하지 않습니다.");
         }
 
+        Optional<ConsignedBook> ownBook = consignedBookList.stream().filter(consignedBook -> consignedBook.getConsignor().getId().equals(memberId)).findAny();
+        if (ownBook.isPresent()) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, HttpExceptionCode.OWN_BOOK_CANNOT_CONSIGN, "본인 소유의 도서는 대여할 수 없습니다.");
+        }
         List<ConsignedBook> rentedConsignedBook = consignedBookList.stream().filter(ConsignedBook::isRented).toList();
         if (!rentedConsignedBook.isEmpty()) {
             List<String> rentedBookNameList = rentedConsignedBook.stream().map(ConsignedBook::getName).toList();

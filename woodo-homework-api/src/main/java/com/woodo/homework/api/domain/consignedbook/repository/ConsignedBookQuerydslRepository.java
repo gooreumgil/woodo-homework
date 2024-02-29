@@ -34,7 +34,8 @@ class ConsignedBookQuerydslRepositoryImpl extends Querydsl5RepositorySupport imp
                         containsBookName(condition.getBookName()),
                         consignorNameEq(condition.getConsignorName()),
                         minRentalPrice(condition.getMinRentalPrice()),
-                        maxRentalPrice(condition.getMaxRentalPrice())
+                        maxRentalPrice(condition.getMaxRentalPrice()),
+                        excludeOwnerBook(condition.getConsignorId())
                 )
 
         );
@@ -54,6 +55,10 @@ class ConsignedBookQuerydslRepositoryImpl extends Querydsl5RepositorySupport imp
 
     private BooleanExpression maxRentalPrice(BigDecimal maxPrice) {
         return maxPrice != null ? consignedBook.rentalPrice.lt(maxPrice) : null;
+    }
+
+    private BooleanExpression excludeOwnerBook(Long consignorId) {
+        return consignorId != null ? consignedBook.consignor.id.ne(consignorId) : null;
     }
 
 }

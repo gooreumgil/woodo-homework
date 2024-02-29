@@ -1,13 +1,16 @@
 package com.woodo.homework.api.config;
 
-import com.woodo.homework.api.config.jwt.JwtAuthenticationExceptionFilter;
-import com.woodo.homework.api.config.jwt.JwtAuthenticationFilter;
-import com.woodo.homework.api.config.jwt.JwtProvider;
+import com.woodo.homework.api.security.CustomAuthenticationEntryPoint;
+import com.woodo.homework.api.security.jwt.JwtAuthenticationExceptionFilter;
+import com.woodo.homework.api.security.jwt.JwtAuthenticationFilter;
+import com.woodo.homework.api.security.jwt.JwtProvider;
+import com.woodo.homework.api.security.CustomAccessDeniedHandler;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,7 +47,7 @@ public class ApiSecurityConfig {
                 .authorizeHttpRequests(registry -> {
                     registry
                             .requestMatchers(permitAllRequests).permitAll()
-                            .anyRequest().authenticated();
+                            .anyRequest().hasRole("MEMBER");
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);
@@ -55,6 +58,13 @@ public class ApiSecurityConfig {
                 .addFilterAfter(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), jwtProvider), CorsFilter.class)
                 .addFilterBefore(new JwtAuthenticationExceptionFilter(), JwtAuthenticationFilter.class)
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http
+                .exceptionHandling(configurer ->
+                        configurer
+                                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                                .accessDeniedHandler(new CustomAccessDeniedHandler())
+                );
 
         http
                 .headers(configure -> {
@@ -71,8 +81,13 @@ public class ApiSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public RoleHierarchy roleHierarchy() {
+
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_MEMBER");
+
+        return roleHierarchy;
+
     }
 
     @Bean
@@ -91,6 +106,11 @@ public class ApiSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
 

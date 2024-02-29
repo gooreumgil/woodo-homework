@@ -1,4 +1,4 @@
-package com.woodo.homework.api.config.jwt;
+package com.woodo.homework.api.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woodo.homework.api.constants.ExceptionConstants;

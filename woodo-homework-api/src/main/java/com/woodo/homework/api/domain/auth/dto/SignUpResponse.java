@@ -21,10 +21,10 @@ public class SignUpResponse {
     private LocalDateTime createdDateTime;
     private LocalDateTime updatedDateTime;
 
-    public SignUpResponse(Member member) {
+    public SignUpResponse(Member member, String decryptedEmail) {
         this.id = member.getId();
         this.name = member.getName();
-        this.email = member.getEmail();
+        this.email = decryptedEmail;
         this.phoneNumber = member.getPhoneNumber();
         this.createdDateTime = member.getCreatedDateTime();
         this.updatedDateTime = member.getUpdatedDateTime();
