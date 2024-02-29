@@ -9,6 +9,8 @@ import com.woodo.homework.core.domain.consignedbook.repository.ConsignedBookRepo
 import com.woodo.homework.core.domain.member.Member;
 import com.woodo.homework.core.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,4 +76,7 @@ public class BookRentalService {
         return bookRentalRepository.findAllByRentalStartDateBefore(LocalDateTime.now().minusSeconds(10));
     }
 
+    public Page<BookRental> findAllByBorrowerId(Long borrowerId, Pageable pageable) {
+        return bookRentalRepository.findAllByBorrowerId(borrowerId, pageable);
+    }
 }

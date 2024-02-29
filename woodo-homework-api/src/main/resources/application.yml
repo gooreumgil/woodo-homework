@@ -1,6 +1,10 @@
 spring:
   profiles:
     include: core-db
+    group:
+      local: db-local
+      h2: db-h2
+    active: db-h2
 
 jwt:
   secret-key: x8dQjGRKwBU0wDVLXMwuBgx9xWjdw8wG3JWqbGvQRg2X6YtYdqSRcT0YtB9b4wYr

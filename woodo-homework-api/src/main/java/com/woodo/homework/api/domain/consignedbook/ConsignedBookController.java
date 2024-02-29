@@ -41,7 +41,7 @@ public class ConsignedBookController {
         return ResponseEntity.ok(new ConsignedBookResponse(consignedBook));
     }
 
-    @Operation(description = "위탁 도서 전체 조회", summary = "위탁 도서 전체 조회")
+    @Operation(description = "위탁된 도서 전체 조회", summary = "위탁된 도서 전체 조회")
     @GetMapping
     public ResponseEntity<PageResponse<ConsignedBookResponse>> findAllConsignedBooks(
             @Parameter(description = "도서명") @RequestParam(required = false) String bookName,

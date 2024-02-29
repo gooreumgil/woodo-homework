@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,6 +29,8 @@ public class BookRental extends AuditingDomain {
     @JoinColumn(name = "borrower_id")
     private Member borrower;
 
+    private BigDecimal rentalPrice;
+
     private LocalDateTime rentalStartDate;
     private LocalDateTime rentalEndDate;
 
@@ -39,6 +42,7 @@ public class BookRental extends AuditingDomain {
     public void setConsignedBook(ConsignedBook consignedBook) {
         this.consignedBook = consignedBook;
         consignedBook.addBookRental(this);
+        this.rentalPrice = consignedBook.getRentalPrice();
     }
 
     public void setRentalStartDate(LocalDateTime rentalStartDate) {

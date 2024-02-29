@@ -1,8 +1,10 @@
 dependencies {
 
     implementation 'mysql:mysql-connector-java:8.0.32'
+    runtimeOnly 'com.h2database:h2'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.12.5'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
+
 }
 
 tasks.named("test") {
