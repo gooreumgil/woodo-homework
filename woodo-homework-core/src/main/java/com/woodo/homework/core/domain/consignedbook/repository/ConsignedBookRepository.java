@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ConsignedBookRepository extends JpaRepository<ConsignedBook, Long> {
 
-    @Query("select cb from ConsignedBook cb join fetch cb.consignor where cb.id in :ids")
-    List<ConsignedBook> findAllByIdInJoinedConsignor(List<Long> ids);
+    @Query("select cb from ConsignedBook cb join fetch cb.consignor where cb.isRented is false  and cb.id in :ids")
+    List<ConsignedBook> findAllByIdInAndIsRentedFalseJoinedConsignor(List<Long> ids);
 
 }

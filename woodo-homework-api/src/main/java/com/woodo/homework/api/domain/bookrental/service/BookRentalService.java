@@ -38,7 +38,7 @@ public class BookRentalService {
                         HttpExceptionCode.NOT_EXISTS,
                         "존재하지 않는 member 입니다."));
 
-        List<ConsignedBook> consignedBookList = consignedBookRepository.findAllByIdInJoinedConsignor(consignedBookIds);
+        List<ConsignedBook> consignedBookList = consignedBookRepository.findAllByIdInAndIsRentedFalseJoinedConsignor(consignedBookIds);
 
         if (consignedBookList.isEmpty()) {
             throw new HttpException(
