@@ -70,7 +70,7 @@ swagger url: http://localhost:8080/swagger-ui/index.html
 ![img.png](docs/img04.png)
 ![img.png](docs/img05.png)
 
-5. 도석 위탁하기
+5. 도서 위탁하기
 
 ![img.png](docs/img06.png)
 
