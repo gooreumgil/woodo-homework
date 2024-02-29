@@ -10,11 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ConsignedBookService {
 
+    private final ConsignedBookRepository consignedBookRepository;
     private final ConsignedBookQuerydslRepository consignedBookQuerydslRepository;
 
     public Page<ConsignedBook> findAll(ConsignedBookSearchCondition condition, Pageable pageable) {

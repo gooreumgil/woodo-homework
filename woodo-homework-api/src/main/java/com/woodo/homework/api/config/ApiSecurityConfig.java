@@ -9,6 +9,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,7 +39,6 @@ public class ApiSecurityConfig {
 
         String[] permitAllRequests = new String[]{
                 "/api/v1/auth/**",
-                "/api/v1/consigned-books",
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
         };
@@ -47,7 +47,8 @@ public class ApiSecurityConfig {
                 .authorizeHttpRequests(registry -> {
                     registry
                             .requestMatchers(permitAllRequests).permitAll()
-                            .anyRequest().hasRole("MEMBER");
+                            .requestMatchers(HttpMethod.GET, "/api/v1/consigned-books").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);

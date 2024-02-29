@@ -20,7 +20,6 @@ import java.util.List;
 public class BookRentalController {
 
     private final BookRentalService bookRentalService;
-    
 
     @Operation(description = "도서대여", summary = "도서대여")
     @PostMapping

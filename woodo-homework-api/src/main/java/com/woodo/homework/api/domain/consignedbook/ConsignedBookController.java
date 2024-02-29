@@ -33,7 +33,7 @@ public class ConsignedBookController {
     private final ConsignedBookService consignedBookService;
     private final MemberService memberService;
 
-    @Operation(description = "도서 위탁", summary = "도서 위탁")
+    @Operation(description = "도서 위탁하기", summary = "도서 위탁하기")
     @PostMapping
     public ResponseEntity<?> save(@RequestBody ConsignedBookSaveRequest consignedBookSaveRequest, @AuthenticationPrincipal MemberContext memberContext) {
 
@@ -53,7 +53,7 @@ public class ConsignedBookController {
 
         ConsignedBookSearchCondition consignedBookSearchCondition = new ConsignedBookSearchCondition(bookName, consignorName, minRentalPrice, maxRentalPrice);
         if (memberContext != null) {
-            consignedBookSearchCondition.setConsignorId(consignedBookSearchCondition.getConsignorId());
+            consignedBookSearchCondition.setConsignorId(memberContext.getId());
         }
 
         Page<ConsignedBook> consignedBookPage = consignedBookService.findAll(consignedBookSearchCondition, pageable);

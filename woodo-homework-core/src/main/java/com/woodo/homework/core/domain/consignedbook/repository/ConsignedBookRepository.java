@@ -10,4 +10,5 @@ public interface ConsignedBookRepository extends JpaRepository<ConsignedBook, Lo
 
     @Query("select cb from ConsignedBook cb join fetch cb.consignor where cb.id in :ids")
     List<ConsignedBook> findAllByIdInJoinedConsignor(List<Long> ids);
+
 }

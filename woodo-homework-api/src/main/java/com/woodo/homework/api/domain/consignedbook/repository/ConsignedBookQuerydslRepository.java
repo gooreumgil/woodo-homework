@@ -31,6 +31,7 @@ class ConsignedBookQuerydslRepositoryImpl extends Querydsl5RepositorySupport imp
                 .selectFrom(consignedBook)
                 .leftJoin(consignedBook.consignor).fetchJoin()
                 .where(
+                        consignedBook.isRented.eq(false),
                         containsBookName(condition.getBookName()),
                         consignorNameEq(condition.getConsignorName()),
                         minRentalPrice(condition.getMinRentalPrice()),

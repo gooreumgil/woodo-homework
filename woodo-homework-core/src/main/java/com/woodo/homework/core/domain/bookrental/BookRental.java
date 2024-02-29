@@ -41,4 +41,11 @@ public class BookRental extends AuditingDomain {
         consignedBook.addBookRental(this);
     }
 
+    public void setRentalStartDate(LocalDateTime rentalStartDate) {
+        this.rentalStartDate = rentalStartDate;
+    }
+
+    public void setRentalEndDate(LocalDateTime rentalEndDate) {
+        this.rentalEndDate = rentalEndDate;
+    }
 }
